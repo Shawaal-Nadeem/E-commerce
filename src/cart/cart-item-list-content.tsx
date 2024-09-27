@@ -18,18 +18,26 @@ export function CartItemListContent({
   isDense,
   cartItems,
 }: CartItemListContentProps) {
-  // `AnimatePresence` works the same way with multiple children.
+  // AnimatePresence works the same way with multiple children.
   // Just ensure that each has a unique key and components will animate in
   // and out as they're added or removed from the tree.
   // https://www.framer.com/motion/animate-presence/##multiple-children
+
+  console.log('Cart Items');
+  console.log(cartItems);
   return (
     <AnimatePresence>
-      {cartItems.map((cartItem) => {
-        const { product } = cartItem;
+      {cartItems?.map((cartItem: any, index: number) => {
+        // cartProducts appears to be an object, not an array.
+        const product = cartItem?.cartProducts;
+
+        if (!product) {
+          return null; // Guard clause in case there's no product
+        }
 
         return (
           <li
-            key={product.id}
+            key={index} // Unique key
             className={twJoin('border-b-2 p-6', isDense && 'px-4 py-3')}
           >
             <motion.div
@@ -40,16 +48,16 @@ export function CartItemListContent({
               <div className="flex gap-4">
                 <NextLink
                   href={routes.product({
-                    params: { productId: product.id },
+                    params: { productId: product?.fields?.slug },
                   })}
                   className="line-clamp-3 flex-grow font-semibold"
                 >
-                  {product.title}
+                  {product?.fields?.name} {/* Display product name */}
                 </NextLink>
                 <div className="flex flex-col items-end">
                   <Price
                     className="text-primary"
-                    value={product.price * cartItem.count}
+                    value={product?.fields?.price * cartItem.count} 
                   />
                 </div>
               </div>

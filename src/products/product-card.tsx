@@ -13,7 +13,7 @@ type ProductCardProps = {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <NextLink
-      href={routes.product({ params: { productId: product.id } })}
+      href={routes.product({ params: { productId: product?.fields?.slug } })}
       // To show outline when the link is `focus-visible`.
       className="block"
     >
@@ -22,20 +22,20 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="relative aspect-[12/10] bg-transparent transition duration-500 ease-out group-hover:scale-110">
             <Image
               className="rounded bg-white object-contain"
-              src={product.image}
-              alt={product.title}
+              src={product?.fields?.images[0]?.fields?.file?.url}
+              alt={product?.fields?.name}
               fill
             />
           </div>
         </div>
         <div className="flex flex-col gap-2 text-center">
-          <Tooltip content={product.title}>
+          <Tooltip content={product?.fields?.name}>
             <h3 className="text-sm font-bold fixed-leading-5 fixed-line-clamp-3">
-              {product.title}
+              {product?.fields?.name}
             </h3>
           </Tooltip>
           <div>
-            <Price className="text-primary" value={product.price} />
+            <Price className="text-primary" value={product?.fields?.price} />
           </div>
         </div>
       </article>

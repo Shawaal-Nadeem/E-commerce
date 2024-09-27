@@ -82,9 +82,9 @@ export function ProductFilter({ data }: ProductFilterProps) {
     getData();
   }, [])
 
-  console.log('ProductFilter');
-  console.log(data);
-  console.log(newData);
+  // console.log('ProductFilter');
+  // console.log(data);
+  // console.log(newData);
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -132,9 +132,6 @@ export function ProductFilter({ data }: ProductFilterProps) {
 
       router.push(`/search?${params.toString()}`);
     });
-
-
-
 
   };
 

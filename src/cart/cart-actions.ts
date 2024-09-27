@@ -1,21 +1,28 @@
 'use server';
 
-import type { Id } from '@/common/common-types';
+import type { stringDatatype } from '@/common/common-types';
 import { cookies } from 'next/headers';
 import { getCart } from './cart-fetchers';
 import type { Cart } from './cart-types';
 
-export async function addProductToCart(productId: Id) {
+export async function addProductToCart(productId: any) {
+
   const cart = await getCart();
+
+  console.log('Before Data Push -> ', cart);
+  // console.log('cartProducts ->', JSON.stringify(cart?.cartItems[0]?.cartProducts, null, 2));
+
 
   let cartItems: Cart = [];
 
   if (cart) {
-    cartItems = cart.cartItems.map((cartItem) => ({
-      productId: cartItem.product.id,
+    cartItems = cart.cartItems.map((cartItem:any) => ({
+      productId: cartItem.cartProducts?.fields?.slug,
       count: cartItem.count,
     }));
   }
+
+  console.log('Product ID -> ', productId);
 
   const foundInCart = cartItems.find(
     (cartItem) => cartItem.productId === productId,
@@ -25,21 +32,31 @@ export async function addProductToCart(productId: Id) {
     foundInCart.count++;
   } else {
     cartItems.push({ productId, count: 1 });
+    console.log('After Data Pushed -> ', cartItems);
   }
+
+  // for (const cartItem of cart.cartItems) {
+    
+    
+  //   const { product } = cartItem;
+  //   if (product.id !== productId) {
+  //     cartItems.push({ productId: product.id, count: cartItem.count });
+  //   }
+  // }
 
   const cookieStore = cookies();
 
   cookieStore.set('cart', JSON.stringify(cartItems));
 }
 
-export async function decreaseProductInCart(productId: Id) {
+export async function decreaseProductInCart(productId: stringDatatype) {
   const cart = await getCart();
 
   if (!cart) return;
 
   // TODO: Refactor typings, fix namings (cartItems etc.)
   let cartItems: Cart = cart.cartItems.map((cartItem) => ({
-    productId: cartItem.product.id,
+    productId: cartItem?.cartProducts?.fields?.slug,
     count: cartItem.count,
   }));
 
@@ -66,7 +83,7 @@ export async function decreaseProductInCart(productId: Id) {
   }
 }
 
-export async function removeProductFromCart(productId: Id) {
+export async function removeProductFromCart(productId: stringDatatype) {
   const cart = await getCart();
 
   if (!cart) return;
@@ -74,9 +91,9 @@ export async function removeProductFromCart(productId: Id) {
   const cartItems: Cart = [];
 
   for (const cartItem of cart.cartItems) {
-    const { product } = cartItem;
-    if (product.id !== productId) {
-      cartItems.push({ productId: product.id, count: cartItem.count });
+    const { product } = cartItem?.cartProducts;
+    if (product?.fields?.slug !== productId) {
+      cartItems.push({ productId: product?.fields?.slug, count: cartItem.count });
     }
   }
 
@@ -95,4 +112,4 @@ export async function clearCart() {
   const cookieStore = cookies();
   cookieStore.delete('cart');
   return { success: true };
-}
+} 

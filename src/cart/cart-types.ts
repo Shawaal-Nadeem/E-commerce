@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const cartSchema = z
   .array(
     z.object({
-      productId: z.number(),
+      productId: z.string(),
       count: z.number(),
     }),
   )
@@ -13,7 +13,7 @@ export const cartSchema = z
 export type Cart = z.infer<typeof cartSchema>;
 
 export type CartItem = {
-  product: Product;
+  product: any;
   count: number;
 };
 

@@ -23,10 +23,11 @@ export async function CartItemList({ className, isDense }: CartItemListProps) {
       </div>
     );
   }
-
+//   console.log('Cart Ite');
+// console.log(cart);
   return (
     <ul className={className}>
-      <CartItemListContent isDense={isDense} cartItems={cart.cartItems} />
+      <CartItemListContent isDense={isDense} cartItems={cart?.cartItems} />
     </ul>
   );
 }

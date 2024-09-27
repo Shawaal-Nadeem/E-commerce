@@ -1,6 +1,7 @@
 import { createMockArray } from '@/common/common-utils';
 import { ProductCard, ProductCardSkeleton } from './product-card';
 import type { Product } from './product-types';
+import { Temp } from '@/app/temp';
 
 type ProductGridShellProps = React.PropsWithChildren;
 
@@ -10,16 +11,15 @@ function ProductGridShell({ children }: ProductGridShellProps) {
   );
 }
 
-type ProductGridProps = {
-  products: Product[];
-};
 
-export function ProductGrid({ products }: ProductGridProps) {
+export function ProductGrid({ products }: any) {
+
   return (
     <ProductGridShell>
-      {products.map((product) => {
+      {/* <Temp data = {products}/> */}
+      {products?.map((product:any, index:number) => {
         return (
-          <li key={product.id}>
+          <li key={index}>
             <ProductCard product={product} />
           </li>
         );

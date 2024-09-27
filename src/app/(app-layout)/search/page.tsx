@@ -36,10 +36,20 @@ type SearchPageProps = {
   searchParams: Record<string, string | string[] | undefined>;
 };
 
+
 export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   const data = await filterProducts(searchParamsSchema.parse(searchParams));
-  
+  // console.log('Slug Value');
+  // console.log(searchParams.categories);
+
+  // Handle slugVal to ensure it's always a string
+  let slugVal: string | undefined;
+  if (Array.isArray(searchParams.categories)) {
+    slugVal = searchParams.categories.length > 0 ? searchParams.categories[0] : undefined;
+  } else {
+    slugVal = searchParams.categories || undefined; // It could also be a string or undefined
+  }
   return (
     <main className="group/page">
       <PageTitle title="Search Products" srOnly />
@@ -60,7 +70,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <ProductFilterDrawer>
                 <ProductFilter data={data} />
               </ProductFilterDrawer>
-              <SearchResults data={data} />
+              <SearchResults data={data} slugVal={slugVal} />
             </div>
           </Section>
         </div>
