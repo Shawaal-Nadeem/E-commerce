@@ -17,6 +17,8 @@ import { useState, useEffect, useTransition } from 'react';
 import { useSelectedOptionsContext } from './selected-options-context';
 import { createClient } from 'contentful';
 import { Entry } from 'contentful';
+import Link from 'next/link';
+
 
 type ProductFilterProps = {
   data: ProductFilterResponse;
@@ -82,9 +84,9 @@ export function ProductFilter({ data }: ProductFilterProps) {
     getData();
   }, [])
 
-  // console.log('ProductFilter');
-  // console.log(data);
-  // console.log(newData);
+  console.log('ProductFilterPage');
+  console.log(data);
+  console.log(newData);
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();

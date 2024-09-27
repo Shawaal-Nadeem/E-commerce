@@ -44,7 +44,7 @@ export async function SearchResults({ data, slugVal }: SearchResultsProps) {
     console.error('Error fetching data:', err);
   }
   
-  // console.log('Slug Value');
+  // console.log('Slug Value before Data Fetching');
   // console.log(slugVal);
   
 // Check if category exists and is an array

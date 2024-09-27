@@ -23,8 +23,8 @@ export function CartItemListContent({
   // and out as they're added or removed from the tree.
   // https://www.framer.com/motion/animate-presence/##multiple-children
 
-  console.log('Cart Items');
-  console.log(cartItems);
+  // console.log('Cart Items');
+  // console.log(cartItems);
   return (
     <AnimatePresence>
       {cartItems?.map((cartItem: any, index: number) => {

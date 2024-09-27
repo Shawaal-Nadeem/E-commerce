@@ -122,14 +122,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <ProductDetails product={specificProduct} categorySlug={parentCategory?.fields?.slug} categoryName={parentCategory?.fields?.categoryName} />
         </Paper>
       </main>
-      {/* <Section as="aside">
+      <Section as="aside">
         <SectionTitle as="h2">Related Products</SectionTitle>
         <Paper>
           <Suspense fallback={<ProductGridSkeleton itemCount={6} />}>
-            <RelatedProducts productId={productId} />
+            <RelatedProducts parentCategory={parentCategory} productSlug={specificProduct?.fields?.slug}/>
           </Suspense>
         </Paper>
-      </Section> */}
+      </Section>
     </div>
   );
 }
