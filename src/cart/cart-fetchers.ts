@@ -16,10 +16,10 @@ export const getCart = cache(async (): Promise<Maybe<CartDetails>> => {
   if (!cart.success) return null;
 
   const productIds = cart.data.map((item) => item.productId);
-  console.log('Cart Fetcher: Product IDs', productIds);
+  // console.log('Cart Fetcher: Product IDs', productIds);
 
   const cartProducts = await getManyProductsByIds(productIds);
-  console.log('Cart Products', cartProducts);
+  // console.log('Cart Products', cartProducts);
 
   const cartItems: CartItem[] = cart.data.map((item) => {
     const product = cartProducts.find((prod) => prod.fields.slug === item.productId);
@@ -32,7 +32,7 @@ export const getCart = cache(async (): Promise<Maybe<CartDetails>> => {
   const totalPrice = cartItems.reduce((acc, item) => acc + (item.cartProducts.fields.price * item.count), 0);
   const totalCount = cartItems.reduce((acc, item) => acc + item.count, 0);
 
-  console.log('Cart Items', JSON.stringify(cartItems, null, 2));
+  // console.log('Cart Items', JSON.stringify(cartItems, null, 2));
   
   return { cartItems, totalPrice, totalCount };
 });

@@ -9,7 +9,7 @@ export async function addProductToCart(productId: any) {
 
   const cart = await getCart();
 
-  console.log('Before Data Push -> ', cart);
+  // console.log('Before Data Push -> ', cart);
   // console.log('cartProducts ->', JSON.stringify(cart?.cartItems[0]?.cartProducts, null, 2));
 
 
@@ -22,7 +22,7 @@ export async function addProductToCart(productId: any) {
     }));
   }
 
-  console.log('Product ID -> ', productId);
+  // console.log('Product ID -> ', productId);
 
   const foundInCart = cartItems.find(
     (cartItem) => cartItem.productId === productId,
@@ -32,17 +32,8 @@ export async function addProductToCart(productId: any) {
     foundInCart.count++;
   } else {
     cartItems.push({ productId, count: 1 });
-    console.log('After Data Pushed -> ', cartItems);
+    // console.log('After Data Pushed -> ', cartItems);
   }
-
-  // for (const cartItem of cart.cartItems) {
-    
-    
-  //   const { product } = cartItem;
-  //   if (product.id !== productId) {
-  //     cartItems.push({ productId: product.id, count: cartItem.count });
-  //   }
-  // }
 
   const cookieStore = cookies();
 
@@ -88,23 +79,24 @@ export async function removeProductFromCart(productId: stringDatatype) {
 
   if (!cart) return;
 
-  const cartItems: Cart = [];
-
-  for (const cartItem of cart.cartItems) {
-    const { product } = cartItem?.cartProducts;
-    if (product?.fields?.slug !== productId) {
-      cartItems.push({ productId: product?.fields?.slug, count: cartItem.count });
-    }
-  }
+  // Create a new array for items that do not match the productId to remove
+  const cartItems: Cart = cart.cartItems
+    .filter(cartItem => cartItem.cartProducts?.fields?.slug !== productId)
+    .map(cartItem => ({
+      productId: cartItem.cartProducts?.fields?.slug,
+      count: cartItem.count,
+    }));
 
   const cookieStore = cookies();
 
+  // Update the cart cookie based on the remaining items
   if (cartItems.length) {
     cookieStore.set('cart', JSON.stringify(cartItems));
   } else {
     cookieStore.delete('cart');
   }
 }
+
 
 // Server actions should be async function.
 // eslint-disable-next-line @typescript-eslint/require-await

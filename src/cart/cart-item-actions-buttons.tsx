@@ -15,7 +15,7 @@ export function CartItemActionButtons({
   cartItem,
 }: CartItemActionButtonsProps) {
   console.log('cartItem', cartItem);
-  const { product } = cartItem?.cartProducts;
+  const  product  = cartItem?.cartProducts;
   const addProductToCartWithId = addProductToCart.bind(null, product?.fields?.slug);
   const decreaseProductInCartWithId = decreaseProductInCart.bind(
     null,
