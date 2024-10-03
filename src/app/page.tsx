@@ -30,7 +30,7 @@ export default async function LandingPage() {
 
   return (
     <main>
-      <Temp data = {data}/>
+      {/* <Temp data = {data}/> */}
       <Hero />
       <Container maxWidth="xl" className="p-4">
         <Categories categories = {data?.fields?.category} />

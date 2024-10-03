@@ -48,7 +48,7 @@ export const getManyProductsByIds = cache(async (productIds: stringDatatype[]) =
   } 
   async function processCategories(client: any, newData: any) {
     if (newData?.fields?.category) {
-      for (const item of newData.fields.category) {
+      for (const item of newData?.fields?.category) {
         const result = await getNestedRichData(client, item);
         item.fields.productsData = result;
       }

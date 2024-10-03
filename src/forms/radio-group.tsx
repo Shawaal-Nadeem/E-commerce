@@ -36,6 +36,8 @@ type RadioGroupItemProps = React.PropsWithChildren<{
 
 export function RadioGroupItem({ value, children }: RadioGroupItemProps) {
   const id = useId();
+  // console.log('In RadioGroupItem');
+  // console.log(value);
 
   return (
     <div className={rootClassName}>

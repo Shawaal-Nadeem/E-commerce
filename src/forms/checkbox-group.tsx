@@ -20,7 +20,8 @@ export function CheckboxGroup({
   children,
   value,
   onChange,
-}: CheckboxGroupProps) {
+}: any) {
+  // console.log('CheckboxGroup Page: ', value);
   return (
     <CheckboxGroupContext.Provider value={{ value, onChange }}>
       <div role="group">
@@ -47,6 +48,8 @@ type CheckboxProps = React.PropsWithChildren<{
 
 export function Checkbox({ value: checkboxValue, children }: CheckboxProps) {
   const id = useId();
+  // console.log('Checkbox: ', checkboxValue);
+
   const { value, onChange } = useCheckboxGroupContext();
 
   const isAllOption = checkboxValue === allSymbol;

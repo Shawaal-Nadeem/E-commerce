@@ -40,8 +40,9 @@ type SearchPageProps = {
 export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   const data = await filterProducts(searchParamsSchema.parse(searchParams));
-  // console.log('Slug Value');
-  // console.log(searchParams.categories);
+  
+  // console.log('Slug URL Value');
+  // console.log(searchParams);
 
   // Handle slugVal to ensure it's always a string
   let slugVal: string | undefined;
@@ -50,6 +51,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   } else {
     slugVal = searchParams.categories || undefined; // It could also be a string or undefined
   }
+  
+  let priceRangeArr:any = [searchParams.priceRanges];
+  let sortingVal:any = searchParams.sorting;
+  
   return (
     <main className="group/page">
       <PageTitle title="Search Products" srOnly />
@@ -59,7 +64,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <SectionTitle as="h2" srOnly>
               Filter
             </SectionTitle>
+
             <ProductFilter data={data} />
+
           </Section>
           <Section>
             <SectionTitle as="h2" srOnly>
@@ -70,7 +77,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <ProductFilterDrawer>
                 <ProductFilter data={data} />
               </ProductFilterDrawer>
-              <SearchResults data={data} slugVal={slugVal} />
+              <SearchResults slugVal={slugVal} priceRangeArr={priceRangeArr} sortingVal={sortingVal}/>
             </div>
           </Section>
         </div>

@@ -15,15 +15,15 @@ export function SelectedFilters() {
   const { optimisticSelectedOptions, setOptimisticSelectedOptions } =
     useSelectedOptionsContext();
 
+  // Filter out options that are not visible or have no value
   const visibleOptions = optimisticSelectedOptions
-    .filter((option) => option.isVisible)
-    // Sorting selected options to prevent different ordering between
-    // real and optimistic data.
+    .filter((option) => option.isVisible && option.value) // Ensure value is not empty
     .toSorted((a, b) => orderComparer.compare(a.order, b.order));
 
   return (
     <div data-pending={isPending ? true : undefined}>
-      {!!visibleOptions.length && (
+      {/* Only render if there are valid filters selected */}
+      {visibleOptions.length > 0 && (
         <MobilePadding>
           <ul className="flex flex-row flex-wrap items-center gap-1">
             {visibleOptions.map((selectedOption) => {
@@ -48,8 +48,9 @@ export function SelectedFilters() {
 
                           const params = new URLSearchParams();
 
+                          // Add valid selected options to query params
                           for (const selectedOption of newOptimisticSelectedOptions) {
-                            if (selectedOption.isVisible) {
+                            if (selectedOption.isVisible && selectedOption.value) {
                               params.append(
                                 selectedOption.filterKey,
                                 selectedOption.value,
