@@ -7,6 +7,8 @@ import { NextLink } from '@/routing/next-link';
 import { ThemeToggle } from '@/styles/theme-toggle';
 import type { LucideIcon } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
+import { createClient } from 'contentful';
+
 
 type LayoutProps = React.PropsWithChildren;
 
@@ -18,7 +20,8 @@ export function Layout({ children }: LayoutProps) {
 
 type LayoutHeaderProps = React.PropsWithChildren;
 
-export function LayoutHeader({ children }: LayoutHeaderProps) {
+export async function LayoutHeader({ children }: LayoutHeaderProps) {
+  
   return (
     <header className="fixed z-10 h-app-header w-full border-b bg-background/75 backdrop-blur-md">
       <Container
