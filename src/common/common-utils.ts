@@ -1,9 +1,38 @@
+// 'use client'
 import type { Nil } from './common-types';
+import { createClient } from 'contentful';
 
-export const APP_URL = 'https://next-shopper.vercel.app';
-export const APP_TITLE = 'next-shopper';
-export const APP_DESCRIPTION = `${APP_TITLE} is a simple fullstack e-commerce website demo built with Next.js`;
-export const APP_REPOSITORY_URL = 'https://github.com/onderonur/next-shopper';
+async function getWebInfo(){
+  const spaceId = process.env.NEXT_PUBLIC_SPACE_ID;
+  const accessToken = process.env.NEXT_PUBLIC_CONTENT_DELIVERY_API;
+  let appInfo:any;
+  const client = createClient({
+    space: spaceId as string,
+    accessToken: accessToken as string,
+  });
+
+  try {
+    const webInfo = await client.getEntries({
+      content_type: 'webInfo',
+    });
+    appInfo = webInfo?.items[0];
+    return appInfo;
+}
+catch (error) {
+  console.error('Error fetching data from Contentful:', error);
+}
+}
+
+const appInfo = await getWebInfo();
+// console.log(appInfo);
+let appURL:string = appInfo?.fields?.websiteDomainLink;
+let appTitle:string = appInfo?.fields?.websiteName;
+let appDescription:string = appInfo?.fields?.websiteDescription;
+let appRepositoryURL:string = appInfo?.fields?.socialLink;
+export const APP_URL = appURL;
+export const APP_TITLE = appTitle;
+export const APP_DESCRIPTION = appDescription;
+export const APP_REPOSITORY_URL = appRepositoryURL;
 
 export const createMockArray = (length: number) => {
   // eslint-disable-next-line unicorn/prefer-spread

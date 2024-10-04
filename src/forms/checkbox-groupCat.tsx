@@ -49,14 +49,12 @@ export function CheckboxCat({ value, children }: CheckboxProps) {
     onChange(newValue);
   };
 
-  const handleToggle = () => {
-    setIsToggled((prev:any) => !prev); // Toggle the background color
-  };
+  
 //   console.log('isToggled: ', isToggled);
   return (
     <div
-      className={`group flex gap-2 p-2 transition justify-center ${isToggled ? 'bg-blue-500' : ''}`} // Apply blue background if toggled
-      onClick={handleToggle} // Toggle on click
+      className={`group flex gap-2 p-2 transition justify-center `} 
+      
     >
       {/* The checkbox is hidden but still functional for the underlying logic */}
       <RadixCheckbox.Root
@@ -65,12 +63,22 @@ export function CheckboxCat({ value, children }: CheckboxProps) {
         onCheckedChange={handleCheckedChange}
         className="hidden" // Hide the checkbox input visually
       />
+
+<button
+  className="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] rounded-lg dark:bg-[#1DED81] bg-[#0B8445] active:scale-95"
+>
+  <span
+    className=" flex items-center w-56 rounded-md dark:bg-[#1DED81] bg-[#0B8445]"
+  >
       <Label
-        className={`cursor-pointer pt-2 pb-2 text-center w-56 rounded-md dark:hover:bg-[#3A3A40] ${isToggled ? 'bg-blue-500' : ''} hover:bg-[#ECECEE] ${checked ? '' : ''}`}
+        className={`cursor-pointer pt-2 pb-2 text-center w-56 rounded-md dark:text-black text-white font-bold  ${checked ? '' : ''}`}
         htmlFor={id}
       >
-        {children}
+           {children}
+
       </Label>
+  </span>
+</button>
     </div>
   );
 }

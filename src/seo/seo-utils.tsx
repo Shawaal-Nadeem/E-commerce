@@ -18,7 +18,7 @@ export function getMetadata({
   return {
     title: metaTitle,
     description: metaDescription,
-    creator: 'Onur Önder',
+    creator: 'Shawaal Nadeem',
     metadataBase: new URL(APP_URL),
     openGraph: {
       type: 'website',
@@ -34,7 +34,7 @@ export function getMetadata({
       title: metaTitle,
       description: metaDescription,
       images,
-      creator: '@onderonur_',
+      creator: '@shawaal_',
     },
     alternates: {
       canonical: pathname,

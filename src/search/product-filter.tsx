@@ -112,7 +112,7 @@ export function ProductFilter({ data }: ProductFilterProps) {
     // Add selected values to the optimistic options
     for (const value of newValues) {
       const option = filterOption?.fields?.options?.find(
-        (item: any) => item.fields.value.toLowerCase() === value.toLowerCase()
+        (item: any) => item.fields.value.toLowerCase() === value?.toLowerCase()
       );
 
       if (option && option.fields.value) {
