@@ -1,4 +1,4 @@
-import type { Id, Maybe } from '@/common/common-types';
+import type { stringDatatype, Maybe } from '@/common/common-types';
 import { isNil } from '@/common/common-utils';
 import type { ProductFilterArgs } from '@/search/search-types';
 
@@ -62,7 +62,7 @@ function createRoute<RouteArgs extends CreateRouteArgs>(
 export const routes = {
   home: createRoute(() => '/'),
   search: createRoute<{ query?: ProductFilterArgs }>(() => '/search'),
-  product: createRoute<{ params: { productId: Id } }>(
+  product: createRoute<{ params: { productId: stringDatatype } }>(
     (params) => `/products/${params.productId}`,
   ),
   checkout: createRoute(() => '/checkout'),

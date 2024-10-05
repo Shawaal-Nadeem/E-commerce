@@ -1,5 +1,4 @@
 import type { stringDatatype } from '@/common/common-types';
-import { getRelatedProducts } from './product-fetchers';
 import { ProductGrid } from './product-grid';
 
 type RelatedProductsProps = {

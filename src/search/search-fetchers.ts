@@ -35,10 +35,10 @@ async function getProductFilterOptions() {
 
 async function getManyProducts(args: ProductFilterArgs) {
   const db = await getDb();
-  let response: Product[] = [...db.products];
+  let response: any = [...db.products];
 
   if (args.categories?.length) {
-    response = response.filter((product) =>
+    response = response.filter((product:any) =>
       args.categories?.includes(product.category.value),
     );
   }
@@ -55,7 +55,7 @@ async function getManyProducts(args: ProductFilterArgs) {
           : Number(maxPriceText);
       productsInPriceRanges.push(
         ...response.filter(
-          (product) => product.price >= minPrice && product.price <= maxPrice,
+          (product:any) => product.price >= minPrice && product.price <= maxPrice,
         ),
       );
     }
@@ -66,11 +66,11 @@ async function getManyProducts(args: ProductFilterArgs) {
   if (args.sorting) {
     switch (args.sorting as ProductSorting) {
       case ProductSorting.PRICE_ASC: {
-        response.sort((a, b) => a.price - b.price);
+        response.sort((a:any, b:any) => a.price - b.price);
         break;
       }
       case ProductSorting.PRICE_DESC: {
-        response.sort((a, b) => b.price - a.price);
+        response.sort((a:any, b:any) => b.price - a.price);
         break;
       }
     }

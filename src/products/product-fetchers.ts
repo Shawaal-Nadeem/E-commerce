@@ -1,6 +1,5 @@
 import type { stringDatatype } from '@/common/common-types';
 import { getDb } from '@/db/db-utils';
-import { filterProducts } from '@/search/search-fetchers';
 import { cache } from 'react';
 import { createClient } from 'contentful';
 
@@ -81,18 +80,3 @@ if (matchedProducts) {
   return specificProducts;
 });
 
-export const getRelatedProducts = cache(async (productId: stringDatatype) => {
-  const product = await getOneProductById(productId);
-
-  if (!product) return [];
-
-  const { products } = await filterProducts({
-    categories: [product.category.value],
-  });
-
-  const relatedProducts = products.filter(
-    (relatedProduct) => relatedProduct.id !== product.id,
-  );
-
-  return relatedProducts;
-});

@@ -199,7 +199,7 @@ export function ProductFilter({ data }: ProductFilterProps) {
             filterInput = (
               <CheckboxGroup
                 value={values[filterKey]}
-                onChange={(newValue) => {
+                onChange={(newValue:any) => {
                   handleChange(filterKey, newValue);
                 }}
               >

@@ -84,53 +84,53 @@ export async function SearchResults({ slugVal, priceRangeArr, sortingVal }: any)
 
   // console.log('Specific Category:', specificCategory);
   let filteredItems = specificCategory;
-  if (Array.isArray(priceRangeArr) && priceRangeArr.length > 0 && priceRangeArr.every(range => range !== undefined)) {
-    console.log('Price Range Value:', priceRangeArr);
-  
-    // Flatten the priceRangeArr in case it contains nested arrays
-    const flatPriceRangeArr = priceRangeArr.flat();
-  
-    // Parse price ranges into min and max values
-    const parsedRanges = flatPriceRangeArr.map(range => {
-      // Ensure the range is a string
-      if (typeof range !== 'string') {
-        console.error('Unexpected non-string value in priceRangeArr:', range);
-        return null; // Skip this item or handle it appropriately
-      }
-  
-      // Handle "100-max" scenario
-      const [minStr, maxStr] = range.split('-');
-      const min = Number(minStr);
-      const max = maxStr === 'max' || !maxStr ? Infinity : Number(maxStr); // Use Infinity if max is 'max' or undefined
-  
-      // Return min and max as an object
-      return { min, max };
-    }).filter(Boolean); // Filter out any null or undefined results
-  
-    // Filter specificCategory based on the price range
-    filteredItems = specificCategory.filter(item => {
-      const itemPrice = item.fields.price;
-  
-      // Check if the item's price falls within any of the parsed ranges
-      return parsedRanges.some(range => itemPrice >= range.min && itemPrice <= range.max);
-    });
-  
-    console.log('Filtered Items by Price Range:', filteredItems);
-  } else {
-    console.warn('priceRangeArr is not an array or contains undefined values:', priceRangeArr);
-  }
+if (Array.isArray(priceRangeArr) && priceRangeArr.length > 0 && priceRangeArr.every(range => range !== undefined)) {
+  console.log('Price Range Value:', priceRangeArr);
 
-  if (sortingVal !== undefined) {
-    console.log('Sorting Value:', sortingVal);
-  
-    if (sortingVal === 'price-asc') {
-      filteredItems.sort((a, b) => a.fields.price - b.fields.price);
-      console.log('Sorted Items by Price Ascending:', filteredItems);
-    } else if (sortingVal === 'price-desc') {
-      filteredItems.sort((a, b) => b.fields.price - a.fields.price);
-      console.log('Sorted Items by Price Descending:', filteredItems);
+  const flatPriceRangeArr = priceRangeArr.flat();
+  const parsedRanges = flatPriceRangeArr.map(range => {
+    if (typeof range !== 'string') {
+      console.error('Unexpected non-string value in priceRangeArr:', range);
+      return null;
     }
+
+    const [minStr, maxStr] = range.split('-');
+    const min = Number(minStr);
+    const max = maxStr === 'max' || !maxStr ? Infinity : Number(maxStr);
+    return { min, max };
+  }).filter(Boolean);
+
+  // Update filter to include explicit typing for 'item'
+  filteredItems = specificCategory.filter((item: { fields: { price: number } }) => {
+    const itemPrice = item.fields.price;
+  
+    return parsedRanges.some((range) => {
+      // Ensure range and its min and max are properly defined
+      if (range && typeof range.min === 'number' && typeof range.max === 'number') {
+        return itemPrice >= range.min && itemPrice <= range.max;
+      }
+      return false; // Ignore ranges that are not properly defined
+    });
+  });
+  
+
+  console.log('Filtered Items by Price Range:', filteredItems);
+} else {
+  console.warn('priceRangeArr is not an array or contains undefined values:', priceRangeArr);
+}
+
+// Sorting with explicit types
+if (sortingVal !== undefined) {
+  console.log('Sorting Value:', sortingVal);
+  if (sortingVal === 'price-asc') {
+    filteredItems.sort((a: { fields: { price: number } }, b: { fields: { price: number } }) => a.fields.price - b.fields.price);
+    console.log('Sorted Items by Price Ascending:', filteredItems);
+  } else if (sortingVal === 'price-desc') {
+    filteredItems.sort((a: { fields: { price: number } }, b: { fields: { price: number } }) => b.fields.price - a.fields.price);
+    console.log('Sorted Items by Price Descending:', filteredItems);
   }
+}
+
   
   return (
     <>

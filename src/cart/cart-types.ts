@@ -13,9 +13,17 @@ export const cartSchema = z
 export type Cart = z.infer<typeof cartSchema>;
 
 export type CartItem = {
-  product: any;
+  cartProducts: {
+    fields: {
+      slug: string;
+      price: number;
+      name: string; // Add this line
+    };
+  };
   count: number;
 };
+
+
 
 export type CartDetails = {
   cartItems: CartItem[];

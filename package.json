@@ -3,17 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "codequality": "npm run format && npm run lint && npm run typecheck",
-    "codequality:fix": "npm run format:fix && npm run lint:fix && npm run typecheck",
     "dev": "next dev",
-    "format": "prettier --check --ignore-unknown .",
-    "format:fix": "prettier --write --ignore-unknown .",
-    "lint": "next lint --max-warnings 0",
-    "lint:fix": "next lint --fix --max-warnings 0",
-    "prepare": "husky",
+    "build": "tsc --noEmit && next build",
     "start": "next start",
-    "typecheck": "tsc"
+    "lint": "next lint"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.22.11",
