@@ -20,7 +20,7 @@ async function getCartData(req: NextApiRequest){
 
     const cookies = parse(req.headers.cookie || '');
     const cart = JSON.parse(cookies.cart || '[]');
-    console.log('Cart:', JSON.stringify(cart, null, 2));
+    // console.log('Cart:', JSON.stringify(cart, null, 2));
 
     const spaceId = process.env.NEXT_PUBLIC_SPACE_ID;
     const accessToken = process.env.NEXT_PUBLIC_CONTENT_DELIVERY_API;
@@ -47,12 +47,12 @@ async function getCartData(req: NextApiRequest){
   let customerProductsData:any = [];
   let overallTotalPrice = 0;
 
-  console.log('Categories:', categories);
+  // console.log('Categories:', categories);
 
   // Loop through each cart item and find corresponding product data by slug (productId)
   for (const cartItem of cart) {
     const slugVal = cartItem.productId;
-    console.log('Slug Value in Cart:', slugVal);
+    // console.log('Slug Value in Cart:', slugVal);
 
     let foundProduct = null;
     let foundCategory = null;
@@ -100,8 +100,8 @@ async function getCartData(req: NextApiRequest){
   }
 
   // Log the fetched products
-  console.log('Customer Products Data :', JSON.stringify(customerProductsData));
-  console.log('Overall Total Price:', overallTotalPrice);
+  // console.log('Customer Products Data :', JSON.stringify(customerProductsData));
+  // console.log('Overall Total Price:', overallTotalPrice);
   return {customerProductsData, overallTotalPrice};
 }
 
@@ -127,7 +127,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
             
         const {customerProductsData, overallTotalPrice} = await getCartData(req);
 
-        console.log('Request Body:', req.body);
+        // console.log('Request Body:', req.body);
       const { fullName, email, phone, city, address} = req.body;
 
       // Start a transaction
@@ -170,7 +170,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
         payment_method_types: ['card'],
       });
 
-      console.log('Payment Intent Created:', paymentIntent);
+      // console.log('Payment Intent Created:', paymentIntent);
 
       // Return the client secret to complete the payment
       res.status(200).json({
