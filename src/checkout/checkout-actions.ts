@@ -21,15 +21,13 @@ export async function completeCheckout(
     email: formData.get('email'),
   };
 
-  const inputResult = shippingInfoSchema.safeParse(input);
-
-  if (!inputResult.success) {
-    return { success: false, fieldErrors: inputResult.error.format() };
-  }
+  console.log('------------------Entering Complete Checkout Function -----------------');
 
   const cookieStore = cookies();
 
-  cookieStore.delete('cart');
+  console.log('Deleting cart cookie');
+cookieStore.delete('cart');
+console.log('Redirecting to success page');
+redirect('/checkout/success');
 
-  redirect('/checkout/success');
 }
