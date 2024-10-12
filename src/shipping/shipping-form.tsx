@@ -11,7 +11,7 @@ import { PatternFormatInput } from '@/forms/pattern-format-input';
 import { Select, SelectItem } from '@/forms/select';
 import { SubmitButton } from '@/forms/submit-button';
 import type { Continent } from '@/shipping/shipping-types';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { completeCheckout } from '../checkout/checkout-actions';
 // Import Stripe packages
@@ -167,6 +167,44 @@ function CheckoutFormContent({ continents }: CheckoutFormProps) {
     }
   };
 
+  // Card Text Light n Dark mode 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check if dark mode is enabled by checking the `dark` class on the document
+    const isDark = document.documentElement.classList.contains('dark');
+    setIsDarkMode(isDark);
+    
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+    });
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+
+  const cardElementOptions = {
+    style: {
+      base: {
+        color: isDarkMode ? 'white' : 'black',
+        '::placeholder': {
+          color: isDarkMode ? '#bbbbbb' : '#666666',
+        },
+        backgroundColor: isDarkMode ? '#1A1A1A' : '#FFFFFF',
+        fontSize: '16px',
+        fontFamily: 'Arial, sans-serif',
+      },
+      invalid: {
+        color: 'red',
+      },
+    },
+  };
+
   return (
     <Form
     ref={formRef}
@@ -209,7 +247,11 @@ function CheckoutFormContent({ continents }: CheckoutFormProps) {
 
     <FormItem isRequired errorMessages={fieldErrors?.address?._errors}>
       <FormItemLabel>Card</FormItemLabel>
-      <CardElement className=' text-white'/>
+      <div className=' border-2 border-[#E4E4E7] h-10 bg-white rounded-md'>
+        <div>
+      <CardElement className='pt-2 pl-2 pr-2' options={cardElementOptions}/>
+        </div>
+      </div>
       <FormItemErrorMessage />
     </FormItem>
     

@@ -20,7 +20,7 @@ export function Hero() {
           <p className="text-lg font-semibold text-muted-foreground sm:text-xl">
             {APP_DESCRIPTION}
           </p>
-          <ButtonLink
+          {/* <ButtonLink
             className="mt-1"
             href={APP_REPOSITORY_URL}
             isExternalUrl
@@ -28,7 +28,7 @@ export function Hero() {
             iconAlignment="right"
           >
             Check the Source Code
-          </ButtonLink>
+          </ButtonLink> */}
         </div>
         <Divider />
         <ButtonLink variant="primary" href={routes.search()}>

@@ -1,8 +1,8 @@
 import type { Nil } from './common-types';
 
-export const APP_URL = 'https://next-shopper.vercel.app';
-export const APP_TITLE = 'Next-Shopper';
-export const APP_DESCRIPTION = `${APP_TITLE} is a simple fullstack e-commerce website demo built with Next.js`;
+export const APP_URL = 'https://e-commerce-sigma-lime.vercel.app';
+export const APP_TITLE = 'Mart-Shawaal';
+export const APP_DESCRIPTION = `${APP_TITLE} is a fullstack e-commerce web app built with Next.js`;
 export const APP_REPOSITORY_URL = 'https://github.com/Shawaal-Nadeem';
 
 export const createMockArray = (length: number) => {
