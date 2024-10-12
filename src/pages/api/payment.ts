@@ -117,6 +117,8 @@ client.connect();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     
+  console.log("DataBase URL: ", process.env.DATABASE_URL);
+
     // Initialize Stripe with your secret key (put this in your .env.local)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2024-09-30.acacia',
