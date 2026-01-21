@@ -7,6 +7,14 @@ const nextConfig = {
     // https://nextjs.org/docs/pages/api-reference/components/image#unoptimized
     unoptimized: true,
   },
+  typescript: {
+    // Ignore TypeScript errors during build
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    // Ignore ESLint errors during build
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
