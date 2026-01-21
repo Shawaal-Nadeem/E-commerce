@@ -85,7 +85,6 @@ export async function SearchResults({ slugVal, priceRangeArr, sortingVal }: any)
   // console.log('Specific Category:', specificCategory);
   let filteredItems = specificCategory;
 if (Array.isArray(priceRangeArr) && priceRangeArr.length > 0 && priceRangeArr.every(range => range !== undefined)) {
-  console.log('Price Range Value:', priceRangeArr);
 
   const flatPriceRangeArr = priceRangeArr.flat();
   const parsedRanges = flatPriceRangeArr.map(range => {
@@ -114,20 +113,16 @@ if (Array.isArray(priceRangeArr) && priceRangeArr.length > 0 && priceRangeArr.ev
   });
   
 
-  console.log('Filtered Items by Price Range:', filteredItems);
 } else {
   console.warn('priceRangeArr is not an array or contains undefined values:', priceRangeArr);
 }
 
 // Sorting with explicit types
 if (sortingVal !== undefined) {
-  console.log('Sorting Value:', sortingVal);
   if (sortingVal === 'price-asc') {
     filteredItems.sort((a: { fields: { price: number } }, b: { fields: { price: number } }) => a.fields.price - b.fields.price);
-    console.log('Sorted Items by Price Ascending:', filteredItems);
   } else if (sortingVal === 'price-desc') {
     filteredItems.sort((a: { fields: { price: number } }, b: { fields: { price: number } }) => b.fields.price - a.fields.price);
-    console.log('Sorted Items by Price Descending:', filteredItems);
   }
 }
 

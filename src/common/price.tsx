@@ -6,9 +6,11 @@ type PriceProps = {
   value: Maybe<number>;
 };
 
-const priceFormatter = new Intl.NumberFormat('en', {
+const priceFormatter = new Intl.NumberFormat('en-PK', {
   style: 'currency',
-  currency: 'USD',
+  currency: 'PKR',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });
 
 export function Price({ className, value }: PriceProps) {

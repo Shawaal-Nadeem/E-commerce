@@ -45,7 +45,7 @@ export default {
         },
       },
       spacing: {
-        'app-header': defaultTheme.spacing[16],
+        'app-header': '5rem',
       },
       // https://tailwindcss.com/docs/hover-focus-and-other-states#aria-states
       aria: {

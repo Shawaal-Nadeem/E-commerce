@@ -10,6 +10,7 @@ This project is a full-stack web application built with **Next.js**, designed to
 - **Content Management**: Integrated with [Contentful](https://www.contentful.com/) for flexible content management and delivery.
 - **Database**: Utilizes [Neon](https://neon.tech/) for a scalable and efficient database solution, ensuring quick data access and management.
 - **Payment Processing**: Implemented [Stripe](https://stripe.com/) for secure payment processing and subscription management.
+- **Admin Authentication**: Secure admin dashboard with login/logout functionality to protect administrative features.
 - **Responsive Design**: Fully responsive layout to ensure a consistent user experience across devices.
 - **Light and Dark Modes**: Toggle between light and dark themes for personalized viewing experiences.
 - **Dynamic Content**: Real-time content updates through Contentful integration.

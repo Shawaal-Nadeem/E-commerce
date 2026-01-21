@@ -56,10 +56,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   let sortingVal:any = searchParams.sorting;
   
   return (
-    <main className="group/page">
+    <main className="group/page bg-gradient-to-br from-stone-50 via-yellow-50/20 to-stone-100 dark:from-stone-950 dark:via-stone-900 dark:to-stone-950 min-h-screen">
       <PageTitle title="Search Products" srOnly />
       <SelectedOptionsProvider data={data}>
-        <div className="grid gap-2 md:grid-cols-[theme(spacing.72)_1fr]">
+        <div className="grid gap-4 md:grid-cols-[theme(spacing.72)_1fr] px-4 py-6">
           <Section className="sticky top-24 hidden max-h-[80vh] overflow-auto px-2 md:block">
             <SectionTitle as="h2" srOnly>
               Filter
@@ -72,7 +72,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <SectionTitle as="h2" srOnly>
               Search Results
             </SectionTitle>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
               <SelectedFilters />
               <ProductFilterDrawer>
                 <ProductFilter data={data} />

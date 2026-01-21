@@ -17,31 +17,43 @@ export function ProductDetails({ product, categorySlug, categoryName }: any) {
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      <div className="relative mx-auto aspect-square w-full max-w-sm md:max-w-lg">
+      <div className="relative mx-auto aspect-square w-full max-w-sm md:max-w-lg overflow-hidden rounded-3xl border-2 border-yellow-100 dark:border-yellow-900/30 bg-white p-4 shadow-2xl">
         <Image
-          className="rounded bg-white object-contain"
+          className="object-contain"
           src={product?.fields?.images[0]?.fields?.file?.url}
           alt={product?.fields.name}
           priority
           fill
         />
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex flex-col gap-2 text-center">
-          <div className="text-3xl font-bold">{product?.fields?.name}</div>
-          <div className="text-2xl">
-            <Price className="text-primary" value={product?.fields?.price} />
+      <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col gap-3 text-center">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 bg-clip-text text-transparent">
+            {product?.fields?.name}
+          </h1>
+          <div className="flex items-center justify-center gap-2">
+            <Price className="text-3xl sm:text-4xl font-extrabold text-yellow-600 dark:text-yellow-400" value={product?.fields?.price} />
           </div>
         </div>
-        <AddProductToCartButton product={product} />
-        <ProductRichDescription richDescriptions={product?.fields?.description}/>
+        
+        <div className="w-full max-w-xs">
+          <AddProductToCartButton product={product} />
+        </div>
+
+        <div className="w-full border-t border-yellow-200 dark:border-yellow-800 pt-6">
+          <ProductRichDescription richDescriptions={product?.fields?.description}/>
+        </div>
+
         <NextLink
           href={routes.search({
             query: { categories: [categorySlug] },
           })}
+          className="hover:scale-105 transition-transform"
         >
-          <Chip>
-            <ChipContent>{categoryName}</ChipContent>
+          <Chip className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900/40 dark:to-stone-900/40 border-yellow-200 dark:border-yellow-700">
+            <ChipContent className="text-yellow-800 dark:text-yellow-200 font-semibold uppercase tracking-wider text-xs">
+              {categoryName}
+            </ChipContent>
           </Chip>
         </NextLink>
       </div>

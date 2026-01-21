@@ -21,13 +21,10 @@ export async function completeCheckout(
     email: formData.get('email'),
   };
 
-  console.log('------------------Entering Complete Checkout Function -----------------');
 
   const cookieStore = cookies();
 
-  console.log('Deleting cart cookie');
 cookieStore.delete('cart');
-console.log('Redirecting to success page');
 redirect('/checkout/success');
 
 }

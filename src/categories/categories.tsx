@@ -8,11 +8,11 @@ export async function Categories({categories}:any) {
   // const oldData = await getManyCategories();
   // console.log("oldData", oldData);
   return (
-    <ul className="grid gap-4 sm:grid-cols-2">
+    <ul className="grid gap-4 sm:gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-2">
       <Temp data = {categories}/>
       {categories?.map((item:any, index:number) => {
         return (
-          <li key={index}>
+          <li key={index} className="transform transition-all duration-500 hover:-translate-y-2">
             <CategoryLink
               href={routes.search({
                 query: { categories: [item.fields.slug] },

@@ -65,13 +65,13 @@ export function CheckboxCat({ value, children }: CheckboxProps) {
       />
 
 <button
-  className="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] rounded-lg dark:bg-[#1DED81] bg-[#0B8445] active:scale-95"
+  className="relative cursor-pointer opacity-90 hover:opacity-100 transition-all p-[2px] rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 active:scale-95 shadow-lg hover:shadow-xl"
 >
   <span
-    className=" flex items-center w-56 rounded-md dark:bg-[#1DED81] bg-[#0B8445]"
+    className="flex items-center w-56 rounded-md bg-gradient-to-r from-yellow-500 to-yellow-600"
   >
       <Label
-        className={`cursor-pointer pt-2 pb-2 text-center w-56 rounded-md dark:text-black text-white font-bold  ${checked ? '' : ''}`}
+        className={`cursor-pointer pt-2 pb-2 text-center w-56 rounded-md text-stone-950 font-extrabold ${checked ? '' : ''}`}
         htmlFor={id}
       >
            {children}

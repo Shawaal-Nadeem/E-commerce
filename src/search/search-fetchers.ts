@@ -1,4 +1,5 @@
 import { getDb } from '@/db/db-utils';
+import { createClient } from 'contentful';
 import type { Product } from '@/products/product-types';
 import type {
   ProductFilterArgs,
@@ -10,7 +11,73 @@ import { ProductFilterKey, ProductSorting } from '@/search/search-utils';
 import { cache } from 'react';
 
 async function getProductFilterOptions() {
-  const { sortings, categories, priceRanges } = await getDb();
+  const { sortings, categories } = await getDb();
+  
+  // Fetch price ranges from Contentful
+  let priceRanges: any[] = [];
+  
+  try {
+    const spaceId = process.env.NEXT_PUBLIC_SPACE_ID;
+    const accessToken = process.env.NEXT_PUBLIC_CONTENT_DELIVERY_API;
+
+    if (spaceId && accessToken) {
+      const client = createClient({
+        space: spaceId,
+        accessToken: accessToken,
+      });
+
+      const filterOptionsEntries = await client.getEntries({
+        content_type: 'filterOptions',
+        limit: 1,
+      });
+
+      if (filterOptionsEntries.items.length > 0) {
+        const filterOptionsEntry = filterOptionsEntries.items[0];
+        
+        // Get the price field (try different field name variations)
+        const fields = filterOptionsEntry.fields as any;
+        const priceFilterRef = fields.priceRanges 
+          || fields.price_ranges
+          || fields.price
+          || fields.priceranges;
+
+        if (priceFilterRef && priceFilterRef.sys && priceFilterRef.sys.id) {
+          const priceFilterEntry = await client.getEntry(priceFilterRef.sys.id);
+          const priceOptions = (priceFilterEntry.fields as any).options || [];
+
+          // Fetch each price filter entry
+          const fetchedPriceFilters = await Promise.all(
+            priceOptions.map(async (option: any) => {
+              try {
+                const filterEntry = await client.getEntry(option.sys.id);
+                return {
+                  title: (filterEntry.fields as any).title || '',
+                  value: (filterEntry.fields as any).value || '',
+                };
+              } catch (err) {
+                console.error('Error fetching price filter entry:', err);
+                return null;
+              }
+            })
+          );
+
+          // Filter out null entries
+          priceRanges = fetchedPriceFilters.filter(f => f !== null);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('⚠️ Error fetching price filters from Contentful, falling back to db.json:', err);
+    // Fallback to db.json if Contentful fetch fails
+    const db = await getDb();
+    priceRanges = db.priceRanges;
+  }
+
+  // If no price ranges found, use fallback from db.json
+  if (priceRanges.length === 0) {
+    const db = await getDb();
+    priceRanges = db.priceRanges;
+  }
 
   const filterOptions: ProductFilterOptions = {
     sortings: {

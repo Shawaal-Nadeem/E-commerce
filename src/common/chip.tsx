@@ -6,7 +6,7 @@ type ChipProps = React.PropsWithChildren;
 
 export function Chip({ children }: ChipProps) {
   return (
-    <div className="flex select-none items-center gap-1 rounded bg-accent px-2 py-1 text-sm font-semibold text-accent-foreground">
+    <div className="flex select-none items-center gap-1 rounded-full bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/40 dark:to-stone-900/40 border border-yellow-200 dark:border-yellow-800/50 px-3 py-1 text-xs font-bold text-yellow-800 dark:text-yellow-200 uppercase tracking-wider shadow-sm">
       {children}
     </div>
   );
